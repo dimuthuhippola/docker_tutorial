@@ -20,7 +20,7 @@ pipeline {
                 script {
                      echo "Building.."
                     // Use SCP to copy the file to the production server
-                    sh "scp ${FILE_PATH} ${PROD_SERVER}"
+                    sh " sshpass -p 'vYpom2kvqcr' scp /home/jenkins/docker_tutorial/docker-compose.yml root@194.195.121.133:/opt/text.yml"
                 }
             }
         }
