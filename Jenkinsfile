@@ -18,6 +18,7 @@ pipeline {
         stage('Copy File to Production Server') {
             steps {
                 script {
+                     echo "Building.."
                     // Use SCP to copy the file to the production server
                     sh "scp ${FILE_PATH} ${PROD_SERVER}"
                 }
