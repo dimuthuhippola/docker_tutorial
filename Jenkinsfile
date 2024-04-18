@@ -18,7 +18,7 @@ pipeline {
         stage('Copy File to Production Server') {
             steps {
                 script {
-                     echo "Building.."
+                     echo "Copying.."
                     // Use SCP to copy the file to the production server
                     sh " sshpass -p 'vYpom2kvqcr' scp /home/jenkins/docker_tutorial/docker-compose.yml root@194.195.121.133:/opt/text.yml"
                 }
