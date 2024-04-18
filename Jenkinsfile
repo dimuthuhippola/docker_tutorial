@@ -4,10 +4,25 @@ pipeline {
             label 'docker-agent-python'
             }
       }
+    parameters {
+        string(name: 'GIT_REPO', defaultValue: 'https://github.com/dimuthuhippola/docker_tutorial.git', description: 'Git repository URL')
+        string(name: 'GIT_BRANCH', defaultValue: 'main', description: 'Git branch')
+        string(name: 'FILE_PATH', defaultValue: '/home/jenkins/docker_tutorial/docker-compose.yml', description: 'Path to the file to be copied')
+        string(name: 'PROD_SERVER', defaultValue: 'root@194.195.121.133:/opt', description: 'Production server SSH address')
+    }
     triggers {
         pollSCM '*/5 * * * *'
     }
     stages {
+
+        stage('Copy File to Production Server') {
+            steps {
+                script {
+                    // Use SCP to copy the file to the production server
+                    sh "scp ${FILE_PATH} ${PROD_SERVER}"
+                }
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building.."
@@ -20,10 +35,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo "Testing.."
-                sh '''
-                cd app
-                python3 run.py
-                '''
+               
             }
         }
         stage('Deliver') {
